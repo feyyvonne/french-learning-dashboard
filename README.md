@@ -2,6 +2,10 @@
 
 A beginner-friendly React and Tailwind dashboard for A2 French study.
 
+## Live App
+
+Share or open the dashboard here: https://feyyvonne.github.io/french-learning-dashboard/
+
 ## Features
 
 - Vocabulary tracker with saved learning status
