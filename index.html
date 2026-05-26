@@ -174,6 +174,28 @@
 
       const todayKey = new Date().toISOString().slice(0, 10);
 
+      function getWordDisplay(word) {
+        const articleMap = {
+          un: "m",
+          une: "f",
+          le: "m",
+          la: "f"
+        };
+        const articleMatch = word.french.match(/^(un|une|le|la)\s+(.+)$/i);
+
+        if (!articleMatch) {
+          return {
+            french: word.french,
+            gender: null
+          };
+        }
+
+        return {
+          french: articleMatch[2],
+          gender: articleMap[articleMatch[1].toLowerCase()]
+        };
+      }
+
       function seededDailyWords(dateKey) {
         const seed = [...dateKey].reduce((total, char) => total + char.charCodeAt(0), 0);
         return [...wordBank]
@@ -414,16 +436,22 @@
                       <div className="grid gap-2">
                         {themeWords.map((word) => {
                           const statusStyle = statusOptions.find((option) => option.value === word.status);
+                          const wordDisplay = getWordDisplay(word);
                           return (
                             <article
                               key={word.id}
                               className={`grid gap-4 rounded-lg border p-4 transition sm:grid-cols-[1fr_auto] sm:items-center ${statusStyle.card}`}
                             >
                               <div className="word-block w-fit max-w-full" tabIndex="0">
-                                <p className="font-semibold">{word.french}</p>
-                                <p className="word-meaning min-h-5 text-sm text-slate-500 transition">
-                                  {word.english}
-                                </p>
+                                <p className="font-semibold">{wordDisplay.french}</p>
+                                <div className="word-meaning flex min-h-5 flex-wrap items-center gap-2 text-sm text-slate-500 transition">
+                                  <span>{word.english}</span>
+                                  {wordDisplay.gender && (
+                                    <span className="rounded-full bg-white px-2 py-0.5 text-xs font-bold text-slate-600">
+                                      {wordDisplay.gender}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                               <div className="sm:w-48">
                                 <label className="sr-only" htmlFor={`word-${word.id}-status`}>
