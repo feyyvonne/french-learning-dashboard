@@ -27,6 +27,16 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      .word-block .word-meaning {
+        opacity: 0;
+      }
+
+      .word-block:hover .word-meaning,
+      .word-block:focus-within .word-meaning {
+        opacity: 1;
+      }
+    </style>
   </head>
   <body class="bg-[#f7fbfa] text-ink antialiased">
     <div id="root"></div>
@@ -407,28 +417,30 @@
                           return (
                             <article
                               key={word.id}
-                              className={`group grid gap-4 rounded-lg border p-4 transition sm:grid-cols-[1fr_auto] sm:items-center ${statusStyle.card}`}
+                              className={`grid gap-4 rounded-lg border p-4 transition sm:grid-cols-[1fr_auto] sm:items-center ${statusStyle.card}`}
                             >
-                              <div>
+                              <div className="word-block w-fit max-w-full" tabIndex="0">
                                 <p className="font-semibold">{word.french}</p>
-                                <p className="min-h-5 text-sm text-slate-500 opacity-0 transition group-hover:opacity-100 group-focus-within:opacity-100">
+                                <p className="word-meaning min-h-5 text-sm text-slate-500 transition">
                                   {word.english}
                                 </p>
                               </div>
-                              <div className="grid grid-cols-3 gap-2 sm:w-[21rem]">
-                                {statusOptions.map((option) => (
-                                  <button
-                                    key={option.value}
-                                    type="button"
-                                    onClick={() => setWordStatus(word.id, option.value)}
-                                    className={`rounded-md px-2 py-2 text-center text-xs font-bold transition sm:text-sm ${
-                                      word.status === option.value ? option.chip : "bg-white/70 text-slate-500 hover:bg-white"
-                                    }`}
-                                    aria-pressed={word.status === option.value}
-                                  >
-                                    {option.label}
-                                  </button>
-                                ))}
+                              <div className="sm:w-48">
+                                <label className="sr-only" htmlFor={`word-${word.id}-status`}>
+                                  Status for {word.french}
+                                </label>
+                                <select
+                                  id={`word-${word.id}-status`}
+                                  value={word.status}
+                                  onChange={(event) => setWordStatus(word.id, event.target.value)}
+                                  className={`w-full rounded-md border border-slate-200 px-3 py-2 text-sm font-bold outline-none transition focus:border-mint focus:ring-2 focus:ring-mint/20 ${statusStyle.chip}`}
+                                >
+                                  {statusOptions.map((option) => (
+                                    <option key={option.value} value={option.value}>
+                                      {option.label}
+                                    </option>
+                                  ))}
+                                </select>
                               </div>
                             </article>
                           );
