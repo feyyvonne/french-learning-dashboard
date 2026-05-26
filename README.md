@@ -5,7 +5,8 @@ A beginner-friendly React and Tailwind dashboard for A2 French study.
 ## Features
 
 - Vocabulary tracker with saved learning status
-- Add your own French words, English meanings, and themes
+- 20 refreshed vocabulary words each day
+- Three word states: Unfamiliar, Learning, and Learned
 - Present-tense verb conjugation quiz
 - Progress, streak, and accuracy stats
 - Mobile-friendly layout
@@ -17,6 +18,7 @@ Open `index.html` in a browser. The app uses CDN-hosted React and Tailwind, so a
 ## Project Progress
 
 - Initial dashboard scaffold
-- Vocabulary tracking with browser storage
+- Daily 20-word vocabulary refresh
+- Vocabulary tracking with Unfamiliar, Learning, and Learned states
 - Verb conjugation quiz with instant feedback
 - Responsive clean UI for mobile and desktop
